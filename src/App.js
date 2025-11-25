@@ -1,11 +1,9 @@
 
-import './App.css';
+import Body from './components/Body';
 
 function App() {
   return (
-    <div>
-      <h1 className='font-bold bg-green text-green-800 text-3xl'>Hello World lets build netflix</h1>
-    </div>
+      <Body/>
   );
 }
 
