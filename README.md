@@ -8,7 +8,11 @@
     -header 
     -sign up /Sign In form
         -validation inside form
-
+        -firebase setup
+        -use firebase for authentication
+        -firebase deploy 
+        -create signup user account
+        -make the redux store 
 
 #Features
 
@@ -27,3 +31,9 @@
 -NetflixGPT
      -Search Bar
      -Movie Suggestions
+
+
+key Concepts learn
+
+useref and ref={refvar_name} for input box
+firebase deploy
