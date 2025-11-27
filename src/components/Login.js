@@ -86,7 +86,7 @@ const Login = () => {
     <div className="relative h-screen w-screen overflow-hidden">
       <Header />
 
-      {/* Background with overlay */}
+      
       <div className="absolute inset-0">
         <img
           className="w-full h-full object-cover"
@@ -97,7 +97,7 @@ const Login = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
       </div>
 
-      {/* Form Container */}
+     
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-20">
         <form
           onSubmit={(e) => e.preventDefault()}
