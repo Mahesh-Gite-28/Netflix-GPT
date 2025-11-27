@@ -6,15 +6,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND, USER_AVATAR } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Inputs
@@ -32,7 +31,7 @@ const Login = () => {
 
     setErrorMessage(message);
 
-    if (message) return; // stop if validation failed
+    if (message) return;
 
     if (!isSignInForm) {
       // SIGN UP
@@ -44,11 +43,9 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
 
-          //update
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://online.fliphtml5.com/umxbb/xesz/files/large/8e2963e4c1a7b9603cea6c7fcd95bada.webp?1684900865",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -60,14 +57,10 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
-            .catch((error) => {
-              navigate("/error")
-            });
+            .catch((error) => {});
         })
         .catch((error) => {
-          console.log(error.code + " - " + error.message);
           setErrorMessage(error.message);
         });
     } else {
@@ -77,12 +70,8 @@ const Login = () => {
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
-          console.log("Signed in:", userCredential.user);
-          navigate("/browse");
-        })
+        .then((userCredential) => {})
         .catch((error) => {
-          console.log(error.code + " - " + error.message);
           setErrorMessage(error.message);
         });
     }
@@ -97,67 +86,102 @@ const Login = () => {
     <div className="relative h-screen w-screen overflow-hidden">
       <Header />
 
-      {/* Background */}
-      <img
-        className="absolute top-0 left-0 w-full h-full object-cover"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/6fd9d446-cd78-453a-8c9c-417ed3e00422/web/IN-en-20251117-TRIFECTA-perspective_2fe4e381-977f-49fd-a7f4-1da0bcf09429_large.jpg"
-        alt="poster"
-      />
-
-      <div className="absolute top-0 left-0 w-full h-full bg-black/60"></div>
-
-      {/* Form */}
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="absolute bg-black/75 p-12 w-full max-w-md mx-auto 
-        left-0 right-0 top-1/2 -translate-y-1/2 text-white 
-        rounded-lg shadow-xl"
-      >
-        <h1 className="font-bold text-4xl mb-6">
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </h1>
-
-        {!isSignInForm && (
-          <input
-            ref={name}
-            type="text"
-            placeholder="Full Name"
-            className="p-3 mb-4 w-full bg-[#333] rounded outline-none focus:bg-[#454545]"
-          />
-        )}
-
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email Address"
-          className="p-3 mb-4 w-full bg-[#333] rounded outline-none focus:bg-[#454545]"
+      {/* Background with overlay */}
+      <div className="absolute inset-0">
+        <img
+          className="w-full h-full object-cover"
+          src={BACKGROUND}
+          alt="background"
         />
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+      </div>
 
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-3 mb-6 w-full bg-[#333] rounded outline-none focus:bg-[#454545]"
-        />
-
-        <p className="text-red-500 py-2 font-bold text-lg">{errorMessage}</p>
-
-        <button
-          className="p-3 bg-red-600 hover:bg-red-700 w-full rounded font-semibold"
-          onClick={handleButtonClick}
+      {/* Form Container */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-20">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="w-full max-w-[450px] bg-black/75 backdrop-blur-sm rounded-md px-16 py-14 space-y-6"
         >
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </button>
+          <h1 className="text-white font-bold text-3xl mb-7">
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
 
-        <p
-          className="py-6 text-gray-300 cursor-pointer hover:underline"
-          onClick={toggleSignInForm}
-        >
-          {isSignInForm
-            ? "New to Netflix? Sign Up Now"
-            : "Already registered? Sign In Now."}
-        </p>
-      </form>
+          <div className="space-y-4">
+            {!isSignInForm && (
+              <input
+                ref={name}
+                type="text"
+                placeholder="Full Name"
+                className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                           rounded-md border border-gray-600 outline-none 
+                           focus:bg-[#454545] focus:border-white transition-all duration-200"
+              />
+            )}
+
+            <input
+              ref={email}
+              type="text"
+              placeholder="Email Address"
+              className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                         rounded-md border border-gray-600 outline-none 
+                         focus:bg-[#454545] focus:border-white transition-all duration-200"
+            />
+
+            <input
+              ref={password}
+              type="password"
+              placeholder="Password"
+              className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                         rounded-md border border-gray-600 outline-none 
+                         focus:bg-[#454545] focus:border-white transition-all duration-200"
+            />
+          </div>
+
+          {errorMessage && (
+            <div className="bg-orange-500/10 border border-orange-500 rounded-md px-4 py-3">
+              <p className="text-orange-400 text-sm font-medium">{errorMessage}</p>
+            </div>
+          )}
+
+          <button
+            className="w-full py-4 bg-[#E50914] text-white font-semibold rounded-md 
+                       hover:bg-[#C11119] transition-colors duration-200 mt-6"
+            onClick={handleButtonClick}
+          >
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </button>
+
+          <div className="flex items-center justify-between text-sm pt-2">
+            <label className="flex items-center text-gray-400 cursor-pointer">
+              <input type="checkbox" className="mr-2 w-4 h-4" />
+              Remember me
+            </label>
+            <a href="#" className="text-gray-400 hover:text-gray-300 hover:underline">
+              Need help?
+            </a>
+          </div>
+
+          <div className="pt-8">
+            <p className="text-gray-400 text-base">
+              {isSignInForm ? "New to Netflix? " : "Already registered? "}
+              <span
+                onClick={toggleSignInForm}
+                className="text-white font-medium hover:underline cursor-pointer"
+              >
+                {isSignInForm ? "Sign up now" : "Sign in now"}
+              </span>
+            </p>
+          </div>
+
+          <p className="text-gray-500 text-xs pt-4 leading-relaxed">
+            This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
+            <a href="#" className="text-blue-600 hover:underline">
+              Learn more
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
