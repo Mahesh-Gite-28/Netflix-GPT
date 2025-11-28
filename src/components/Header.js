@@ -8,7 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constant";
-import { toggleGptSearchView } from "../utils/gptSlice";
+import { toggleGptSearchView, resetGpt } from "../utils/gptSlice";  // ⭐ added resetGpt
 import { SUPPORTED_LANGUAGES } from "../utils/constant";
 import { changeLanguage } from "../utils/configSlice";
 
@@ -19,11 +19,16 @@ const Header = () => {
   const user = useSelector((store) => store.user);
   const langKey = useSelector((store) => store.config.lang);
 
-  const handleLanguageChange=(e)=>{
-    dispatch(changeLanguage(e.target.value))
-  }
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
 
   const handleGPTSearchClick = () => {
+    
+    if (showGptSearch) {
+      dispatch(resetGpt());
+    }
+
     dispatch(toggleGptSearchView());
   };
 
@@ -64,26 +69,27 @@ const Header = () => {
       {user && (
         <div className="flex items-center gap-3 sm:gap-5">
 
-          
-          {showGptSearch && <select
-            className="
+          {showGptSearch && (
+            <select
+              className="
               bg-black/50 text-white border border-white/20 rounded-md 
               px-3 py-2 text-sm focus:outline-none cursor-pointer
               hover:bg-black/70 transition
             "
-            value={langKey}
-            onChange={handleLanguageChange}
-          >
-            {SUPPORTED_LANGUAGES.map((lang) => (
-              <option
-                key={lang.identifier}
-                value={lang.identifier}
-                className="text-black"
-              >
-                {lang.name}
-              </option>
-            ))}
-          </select>}
+              value={langKey}
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option
+                  key={lang.identifier}
+                  value={lang.identifier}
+                  className="text-black"
+                >
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
 
           {/* GPT SEARCH BUTTON */}
           <button
@@ -96,7 +102,7 @@ const Header = () => {
             "
             onClick={handleGPTSearchClick}
           >
-            {showGptSearch?"Homepage":"GPT Search"}
+            {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
 
           {/* USER AVATAR */}

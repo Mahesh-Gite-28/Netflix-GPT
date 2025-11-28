@@ -1,16 +1,35 @@
-import { useRef } from "react";
+import { useRef, useState } from "react"; // ⬅ added useState
 import lang from "../utils/languageConstants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import gemini from "../utils/gemini";
+import { API_OPTIONS } from "../utils/constant";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
-  const langkey = useSelector((store) => store.config.lang);
 
+  const dispatch=useDispatch();
+  const langkey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
 
+  const [loading, setLoading] = useState(false); // ⬅ added lock
+
+  const searchMovieTMDB=async(movie)=>
+  {
+    const data=await fetch("https://api.themoviedb.org/3/search/movie?query="+movie+"&include_adult=false&language=en-US&page=1", API_OPTIONS);
+    const json=await data.json();
+
+    return json.results;
+  }
+
   const handleGPTSearchClick = async () => {
+    if (loading) return;     // ⬅ PREVENT double click
+    setLoading(true);        // ⬅ lock on click
+
     const query = searchText.current.value;
-    if (!query) return;
+    if (!query) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await gemini.models.generateContent({
@@ -35,12 +54,19 @@ const GptSearchBar = () => {
           "5. Only return title names, nothing else."
       });
 
-      const text = response.candidates[0].content.parts[0].text;
-      console.log("GEMINI RESULT:", text);
+      const GeminiMovies = response.candidates[0].content.parts[0].text.split(",").map((movie)=>movie.trim());
+
+      const promiseArray=GeminiMovies.map((movie)=>searchMovieTMDB(movie));
+
+      const tmdbResults=await Promise.all(promiseArray);
+
+      dispatch(addGptMovieResult({movieNames:GeminiMovies,movieResults:tmdbResults}));
 
     } catch (err) {
       console.error("Gemini Error:", err);
     }
+
+    setLoading(false);  // ⬅ unlock after finishing
   };
 
   return (
@@ -60,10 +86,11 @@ const GptSearchBar = () => {
         <button
           type="button"
           onClick={handleGPTSearchClick}
-          className="px-6 py-3 bg-red-700 hover:bg-red-600 active:scale-95 transition rounded-lg 
-                     text-white font-semibold whitespace-nowrap"
+          disabled={loading}   // ⬅ disable when loading
+          className={`px-6 py-3 rounded-lg text-white font-semibold whitespace-nowrap transition
+            ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-red-700 hover:bg-red-600 active:scale-95"}`}
         >
-          {lang[langkey].search}
+          {loading ? "Searching..." : lang[langkey].search}
         </button>
       </form>
     </div>
