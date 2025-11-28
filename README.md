@@ -1,112 +1,130 @@
 🚀 NetflixGPT
-🛠 Project Setup
 
-npx create-react-app netflix-gpt
+NetflixGPT is a smart, AI-powered movie recommendation and browsing application inspired by Netflix.
+It includes authentication, TMDB movie data, background trailers, and an AI search engine powered by Gemini.
+
+🛠️ Project Setup & Core Steps
+
+Initialize React App using npx create-react-app netflix-gpt
 
 Configure TailwindCSS
 
-Header
+Build Header Component
 
-Routing of App
+Implement Routing
 
-🔐 Authentication
+🔐 Authentication (Firebase)
 
 Login form
 
 Sign Up form
 
-Form Validation (regex - regular expression)
+Form validation (Regex)
 
-useRef Hook
+useRef hook for form inputs
 
-Firebase Setup
+Firebase setup
 
-Deploying app to production
+Deploy app to production
 
-Create SignUp user account
+Create SignUp user
 
 Implement SignIn user API
 
-Created Redux Store with userSlice
+Created Redux store with userSlice
 
 Implemented SignOut
 
-Update Profile
+Update profile details
 
-BugFix – Sign Up user displayName & profile picture update
+Bug Fixes
 
-BugFix – Redirect /browse when logged in & redirect to login when logged out
+Signup user displayName & photo update issue
 
-Unsubscribed the onAuthStateChanged callback
+Redirect:
 
-🎥 TMDB Integration
+Unauthenticated → /login
 
-Add hardcoded values to constant file
+Authenticated → /browse
 
-Registered TMDB API, created app & access token
+Unsubscribe onAuthStateChanged to avoid memory leaks
 
-Get Data from TMDB Now Playing Movies API
+🎬 TMDB Integration
 
-Custom Hook for Now Playing Movies
+Added hardcoded constants
 
-Create movieSlice
+Registered TMDB API and generated access token
 
-Update store with movie data
+Fetched Now Playing Movies
 
-🖥 UI & Movie Components
+Implemented custom hooks:
 
-Planning Main Container & Secondary Container
+useNowPlayingMovies
 
-Fetch data for trailer video
+usePopularMovies
 
-Update store with trailer video
+useTopRatedMovies
 
-Embedded YouTube trailer with autoplay + mute
+useUpcomingMovies
 
-Tailwind classes to style Main Container
+Created movieSlice
 
-Build Secondary Container
+Updated store with TMDB data
 
-Build Movie List
+🎞️ UI & Movie Components
 
-Build Movie Card
+Designed Main Container and Secondary Containers
 
-TMDB image CDN URL
+Fetched trailer video from TMDB
 
-Browse page styled using TailwindCSS
+Updated Redux with trailer data
 
-Built multiple custom hooks to fetch and store movieData
+Embedded YouTube trailer (autoplay + mute)
 
-🤖 NetflixGPT – AI Search
+Styled UI using TailwindCSS
 
-GPT Search Page
+Built:
+
+Movie List
+
+Movie Card
+
+TMDB Image CDN integrated
+
+Built multiple hooks to fetch/store movie data
+
+Browse page made fully responsive
+
+🤖 NetflixGPT – AI Movie Search
+
+Created GPT Search Page
 
 GPT Search Bar
 
 Multilingual Search Bar
 
-Gemini API movie search feature
+Integrated Gemini API for movie recommendations
 
-.env configuration
+.env configuration for secret keys
 
-Memoization of custom hooks
+Memoized custom hooks for performance
 
-Fully responsive
+Fully responsive UI
 
-⭐ Features
+⭐ Features Overview
 🔐 Login / Sign Up
 
-Sign In / Sign Up forms
+Login / Signup pages
 
 Redirect to browse page after successful login
 
-🎬 Browse (After Authentication)
+🎬 Browse (Protected Page)
 
 Header
 
-Main Movie
+Main Movie Banner
 
-Trailer in Background
+Background Trailer
 
 Title & Description
 
@@ -116,6 +134,6 @@ Multiple Movie Lists
 
 🤖 NetflixGPT Search
 
-Search Bar
+AI-powered Search Bar
 
-AI-powered Movie Suggestions
+Smart Movie Suggestions
