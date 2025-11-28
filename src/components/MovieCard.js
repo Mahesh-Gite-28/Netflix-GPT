@@ -1,11 +1,27 @@
-const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
+
+import { IMG_CDN_URL } from "../utils/constant";
 
 const MovieCard = ({ posterPath }) => {
   if (!posterPath) return null;
 
   return (
-    <div className="w-36 md:w-48 flex-shrink-0 cursor-pointer transform hover:scale-110 duration-300">
-      <img className="w-full rounded-md shadow-lg" src={IMG_CDN_URL + posterPath} alt="Movie Poster" />
+    <div
+      className="
+        flex-shrink-0 
+        w-28 sm:w-36 md:w-44 lg:w-48 xl:w-52
+        cursor-pointer
+        transform transition duration-300
+        hover:scale-[1.15] hover:z-20
+      "
+    >
+      <img
+        className="
+          w-full h-full rounded-md object-cover
+          shadow-lg
+        "
+        src={IMG_CDN_URL + posterPath}
+        alt="Movie Poster"
+      />
     </div>
   );
 };

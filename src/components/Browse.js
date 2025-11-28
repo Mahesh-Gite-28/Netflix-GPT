@@ -1,3 +1,4 @@
+// Browse.js
 import Header from "./Header";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import MainContainer from "./MainContainer";
@@ -13,9 +14,15 @@ const Browse = () => {
   useUpcomingMovies();
 
   return (
-    <div className="bg-[#141414] min-h-screen overflow-x-hidden">
+    <div className="bg-[#141414] min-h-screen w-full overflow-x-hidden">
       <Header />
-      <MainContainer />
+
+      {/* Main hero section */}
+      <div className="pt-[60px] sm:pt-[70px] md:pt-[80px] lg:pt-[90px]">
+        <MainContainer />
+      </div>
+
+      {/* Movie rows */}
       <SecondaryContainer />
     </div>
   );
