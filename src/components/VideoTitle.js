@@ -1,90 +1,53 @@
+import React from 'react';
+
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div
-      className="
-        absolute 
-        bottom-[14%] sm:bottom-[18%] md:bottom-[22%] lg:bottom-[26%]
-        left-0 
-        px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20
-        z-20 
-        max-w-[92%] sm:max-w-[70%] md:max-w-[55%] lg:max-w-[45%]
-      "
-    >
-      {/* TITLE */}
-      <h1
-        className="
-          text-white font-extrabold 
-          text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl
-          leading-tight drop-shadow-xl
-          mb-3 sm:mb-5
-        "
-      >
-        {title}
-      </h1>
+    <div className="
+      absolute top-0 left-0 z-10
+      text-white w-full aspect-video
+      bg-gradient-to-r from-black 
+      pt-72 sm:pt-56 md:pt-32 lg:pt-4 xl:pt-0 2xl:pt-0
+      mt-24 sm:mt-16 md:mt-20 lg:mt-20 xl:mt-24 2xl:mt-4
+      flex items-end md:items-center
+    ">
 
-      {/* OVERVIEW */}
-      <p
-        className="
-          hidden sm:block
-          text-white/90
-          text-sm sm:text-base md:text-lg
-          leading-relaxed
-          drop-shadow-xl mb-4 sm:mb-6
-          line-clamp-3 md:line-clamp-4
-        "
-      >
-        {overview}
-      </p>
+      <div className="px-4 md:px-12 lg:px-16 pb-16 md:pb-0 space-y-3 md:space-y-6 max-w-xl lg:max-w-2xl">
+        <h1 className="font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight drop-shadow-2xl animate-fade-in">
+          {title}
+        </h1>
 
-      {/* BUTTONS */}
-      <div className="flex items-center gap-3 sm:gap-4 mt-3">
-        {/* PLAY */}
-        <button
-          className="
-            bg-white text-black font-semibold
-            flex items-center gap-2
-            px-4 sm:px-6 md:px-8 
-            py-2 sm:py-2.5 md:py-3
-            text-sm sm:text-base md:text-lg
-            rounded-md shadow-lg
-            hover:bg-white/90 active:scale-95 
-            transition-all
-          "
-        >
-          <svg
-            className="w-4 h-4 sm:w-6 sm:h-6"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          Play
-        </button>
+        <p className="text-sm sm:text-base lg:text-lg text-gray-100 leading-relaxed line-clamp-4 drop-shadow-lg">
+          {overview}
+        </p>
 
-        {/* MORE INFO */}
-        <button
-          className="
-            bg-white/20 text-white font-semibold 
-            flex items-center gap-2
-            px-4 sm:px-6 md:px-8 
-            py-2 sm:py-2.5 md:py-3
-            text-sm sm:text-base md:text-lg
-            rounded-md shadow-lg
-            backdrop-blur-sm border border-white/20
-            hover:bg-white/30 active:scale-95 
-            transition-all
-          "
-        >
-          <svg
-            className="w-4 h-4 sm:w-6 sm:h-6"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-          </svg>
-          More Info
-        </button>
+        <div className="flex flex-wrap gap-2 md:gap-4 pt-3 md:pt-4">
+          <button className="
+          w-full xs:w-auto flex items-center justify-center gap-1 md:gap-3
+          bg-white text-black 
+          px-3 md:px-10 py-2 md:py-4 rounded-md font-bold text-xs md:text-base
+          hover:bg-white/90 transition-all duration-300
+          hover:scale-110 shadow-lg hover:shadow-2xl
+          active:scale-95
+        ">
+            <img src="/assets/play_icon.svg" className="w-4 h-4 md:w-7 md:h-7" alt="" />
+            Play
+          </button>
+          <button className="
+          w-full xs:w-auto flex items-center justify-center gap-1 md:gap-3
+          bg-white/20 backdrop-blur-sm text-white 
+          border border-white/40
+          px-3 md:px-10 py-2 md:py-4 rounded-md font-bold text-xs md:text-base
+          hover:bg-white/30 hover:border-white/60
+          transition-all duration-300
+          hover:scale-110 shadow-lg hover:shadow-2xl
+          active:scale-95
+        ">
+            <img src="/assets/info_icon.svg" className="w-4 h-4 md:w-7 md:h-7" alt="" />
+            More Info
+          </button>
+        </div>
       </div>
+
     </div>
   );
 };

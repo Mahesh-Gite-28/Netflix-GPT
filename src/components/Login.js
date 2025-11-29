@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
-import Header from "./Header";
+import Head from "./Head";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { BACKGROUND, USER_AVATAR } from "../utils/constant";
+import { BACKGROUND_IMG, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -27,159 +27,158 @@ const Login = () => {
       password.current.value,
       isSignInForm
     );
+
     setErrorMessage(message);
+
     if (message) return;
 
     if (!isSignInForm) {
-      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+      // SIGN UP
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           const user = userCredential.user;
+
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: USER_AVATAR,
-          }).then(() => {
-            const { uid, email, displayName, photoURL } = auth.currentUser;
-            dispatch(addUser({ uid, email, displayName, photoURL }));
-          });
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => { });
         })
-        .catch((err) => setErrorMessage(err.message));
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
     } else {
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .catch((err) => setErrorMessage(err.message));
+      // SIGN IN
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => { })
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
     }
   };
 
+  const toggleSignInForm = () => {
+    setIsSignInForm(!isSignInForm);
+    setErrorMessage(null);
+  };
+
   return (
-    <div className="fixed inset-0 w-full h-full bg-black overflow-auto sm:overflow-hidden">
-      <Header />
+    <div className="relative h-screen w-screen overflow-hidden">
+      <Head />
 
-      {/* Background Image + Overlay */}
-      <div className="fixed inset-0 -z-10">
+
+      <div className="absolute inset-0">
         <img
-          src={BACKGROUND}
+          className="w-full h-full object-cover"
+          src={BACKGROUND_IMG}
           alt="background"
-          className="
-            w-full h-full object-cover object-top
-            brightness-75
-          "
         />
-
-        {/* Netflix Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
-
-        {/* Smooth Fade at Top */}
-       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
       </div>
 
-      {/* FORM WRAPPER */}
-      <div
-        className="
-          flex items-center justify-center 
-          w-full min-h-screen
-          px-4 py-20 sm:py-28
-        "
-      >
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 py-8 sm:py-20">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="
-            w-full max-w-[360px] sm:max-w-[420px]
-            bg-black/75 backdrop-blur-sm
-            rounded-md shadow-xl
-            px-6 sm:px-10 py-10 sm:py-12
-            space-y-6
-          "
+          className="w-full max-w-[340px] sm:max-w-[450px] bg-black/75 backdrop-blur-sm rounded-md px-6 sm:px-12 md:px-16 py-6 sm:py-12 md:py-14 space-y-3 sm:space-y-6"
         >
-          <h1 className="text-white font-bold text-3xl sm:text-4xl mb-4">
+          <h1 className="text-white font-bold text-3xl mb-7">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
-          {/* Input Fields */}
           <div className="space-y-4">
             {!isSignInForm && (
               <input
                 ref={name}
                 type="text"
                 placeholder="Full Name"
-                className="
-                  w-full px-4 py-3 
-                  bg-[#333] text-white placeholder-gray-400
-                  rounded-md outline-none
-                  focus:bg-[#454545] focus:ring-2 focus:ring-white/40
-                "
+                className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                           rounded-md border border-gray-600 outline-none 
+                           focus:bg-[#454545] focus:border-white transition-all duration-200
+                           "
               />
             )}
 
             <input
               ref={email}
               type="text"
-              placeholder="Email address"
-              className="
-                w-full px-4 py-3 
-                bg-[#333] text-white placeholder-gray-400
-                rounded-md outline-none
-                focus:bg-[#454545] focus:ring-2 focus:ring-white/40
-              "
+              placeholder="Email Address"
+              className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                         rounded-md border border-gray-600 outline-none 
+                         focus:bg-[#454545] focus:border-white transition-all duration-200"
             />
 
             <input
               ref={password}
               type="password"
               placeholder="Password"
-              className="
-                w-full px-4 py-3 
-                bg-[#333] text-white placeholder-gray-400
-                rounded-md outline-none
-                focus:bg-[#454545] focus:ring-2 focus:ring-white/40
-              "
+              className="w-full px-5 py-4 bg-[#333333] text-white placeholder-gray-400 
+                         rounded-md border border-gray-600 outline-none 
+                         focus:bg-[#454545] focus:border-white transition-all duration-200"
             />
           </div>
 
-          {/* Error Message */}
           {errorMessage && (
-            <div className="bg-red-500/20 border border-red-500 rounded-md px-4 py-3">
-              <p className="text-red-400 text-sm">{errorMessage}</p>
+            <div className="bg-orange-500/10 border border-orange-500 rounded-md px-4 py-3">
+              <p className="text-orange-400 text-sm font-medium">{errorMessage}</p>
             </div>
           )}
 
-          {/* Submit Button */}
           <button
+            className="w-full py-4 bg-[#E50914] text-white font-semibold rounded-md 
+                       hover:bg-[#C11119] transition-colors duration-200 mt-6"
             onClick={handleButtonClick}
-            className="
-              w-full py-3 bg-[#E50914] text-white font-semibold
-              rounded-md hover:bg-[#C11119] transition-all
-              mt-2
-            "
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
-          {/* Helper Options */}
-          <div className="flex items-center justify-between text-gray-300 text-sm">
-            <label className="flex items-center cursor-pointer">
-              <input type="checkbox" className="mr-2" />
+          <div className="flex items-center justify-between text-sm pt-2">
+            <label className="flex items-center text-gray-400 cursor-pointer">
+              <input type="checkbox" className="mr-2 w-4 h-4" />
               Remember me
             </label>
-
-            <a href="#" className="hover:underline">
+            <a href="to" className="text-gray-400 hover:text-gray-300 hover:underline">
               Need help?
             </a>
           </div>
 
-          {/* Switch Between Sign-In / Sign-Up */}
-          <p className="text-gray-400 text-base">
-            {isSignInForm ? "New to Netflix? " : "Already registered? "}
-            <span
-              onClick={() => setIsSignInForm(!isSignInForm)}
-              className="text-white hover:underline cursor-pointer"
-            >
-              {isSignInForm ? "Sign up now" : "Sign in now"}
-            </span>
-          </p>
+          <div className="pt-8">
+            <p className="text-gray-400 text-base">
+              {isSignInForm ? "New to Netflix? " : "Already registered? "}
+              <span
+                onClick={toggleSignInForm}
+                className="text-white font-medium hover:underline cursor-pointer"
+              >
+                {isSignInForm ? "Sign up now" : "Sign in now"}
+              </span>
+            </p>
+          </div>
 
-          {/* Recaptcha Info */}
-          <p className="text-gray-500 text-xs leading-relaxed">
-            This page is protected by Google reCAPTCHA to ensure you're not a bot.
-            <a href="#" className="text-blue-600 hover:underline"> Learn more.</a>
+          <p className="text-gray-500 text-xs pt-4 leading-relaxed">
+            This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
+            <a href="to" className="text-blue-600 hover:underline">
+              Learn more
+            </a>
           </p>
         </form>
       </div>

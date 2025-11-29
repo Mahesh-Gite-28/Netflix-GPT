@@ -1,31 +1,31 @@
 
-import GptSearchBar from './GptSearchBar'
-import GptMovieSuggestion from './GptMovieSuggestion'
-import { BACKGROUND } from '../utils/constant'
+import { BACKGROUND_IMG } from "../utils/constants"
+import GptMovieSuggestions from "./GptMovieSuggestions";
+import GptSearchBar from "./GptSearchBar";
 
+const GptSearch = () => {
 
-const GPTSearch = () => {
-
- 
   return (
-    <div className="relative pt-28 px-4 min-h-screen text-white">
-
-      <div className="fixed inset-0 -z-10">
-        <img
-          src={BACKGROUND}
-          alt="background"
-          className="w-full h-full object-cover"
-        />
+    <div className="fixed inset-0 overflow-x-hidden overflow-y-auto">
+      <div
+        className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${BACKGROUND_IMG})`
+        }}
+      >
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
       </div>
 
-      <div className="fixed inset-0 bg-black/70 -z-10"></div>
-
-      <div className="max-w-4xl mx-auto">
+      <div className="relative min-h-full 
+                      pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-40 
+                      pb-8 sm:pb-10
+                     ">
         <GptSearchBar />
-        <GptMovieSuggestion />
+       <GptMovieSuggestions />
+        
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GPTSearch
+export default GptSearch;

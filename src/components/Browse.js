@@ -1,44 +1,52 @@
-// Browse.js
-import Header from "./Header";
-import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
-import MainContainer from "./MainContainer";
-import SecondaryContainer from "./SecondaryContainer";
-import usePopularMovies from "../hooks/usePopularMovies";
-import useTopRatedMovies from "../hooks/useTopRatedMovies";
-import useUpcomingMovies from "../hooks/useUpcomingMovies";
-import GPTSearch from "./GPTSearch";
-import { useSelector } from "react-redux";
+import Head from './Head'
+import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
+import MainContainer from './MainContainer';
+import SecondaryContainer from './SecondaryContainer';
+import useTopRatedMovies from '../hooks/useTopRatedMovies';
+import usePopularMovies from '../hooks/usePopularMovies';
+import useUpcomingMovies from '../hooks/useUpcomingMovies';
+import useTrendingMovies from '../hooks/useTrendingMovies';
+import useAiringTodayTVShows from '../hooks/useAiringTodayTVShows';
+import useOnTheAirTVShows from '../hooks/useOnTheAirTVShows';
+import usePopularTVShows from '../hooks/usePopularTVShows';
+import useTopRatedTVShows from '../hooks/useTopRatedTVShows';
+import { useSelector } from 'react-redux';
+import GptSearch from './GptSearch';
+import ShimmerBrowse from './ShimmerBrowse';
 
 const Browse = () => {
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+
+  const movies = useSelector(store => store.movies);
+
+  const showGptSearch = useSelector(store => store.gpt.showGptSearch);
 
   useNowPlayingMovies();
-  usePopularMovies();
   useTopRatedMovies();
+  usePopularMovies();
   useUpcomingMovies();
+  useTrendingMovies();
+  useAiringTodayTVShows();
+  useOnTheAirTVShows();
+  usePopularTVShows();
+  useTopRatedTVShows();
+
+  if (!movies.nowPlayingMovies && !movies.trailerVideo) return <ShimmerBrowse/>
 
   return (
-    <div
-      className={`${
-        showGptSearch ? "bg-transparent" : "bg-[#141414]"
-      } min-h-screen w-full overflow-x-hidden`}
-    >
-      <Header />
-
-      {showGptSearch ? (
-        <div className="fixed inset-0 z-40 overflow-auto">
-    <GPTSearch />
-  </div>
-      ) : (
-        <>
-          <div className="pt-[60px] sm:pt-[70px] md:pt-[80px] lg:pt-[90px]">
+    <div className="bg-black min-h-screen">
+      <Head />
+      {
+        showGptSearch ? <GptSearch /> : (
+          <>
             <MainContainer />
-          </div>
-          <SecondaryContainer />
-        </>
-      )}
+            <SecondaryContainer />
+          </>
+        )
+      }
+      
     </div>
-  );
-};
+  )
 
-export default Browse;
+}
+
+export default Browse
