@@ -106,9 +106,9 @@ Gemini AI understands the intent → maps it to TMDB → fetches relevant movies
 
 ---
 
-# 📁 Project Folder Structure
+## 📁 Project Folder Structure
 
-plaintext
+```plaintext
 NETFLIX-GPT/
 │
 ├── node_modules/
@@ -138,7 +138,7 @@ NETFLIX-GPT/
 │   │   ├── ShimmerBrowse.js
 │   │   ├── VideoBackground.js
 │   │   └── VideoTitle.js
-│   │
+│
 │   ├── hooks/
 │   │   ├── useAiringTodayTVShows.js
 │   │   ├── useMovieTrailer.js
@@ -150,7 +150,7 @@ NETFLIX-GPT/
 │   │   ├── useTopRatedTVShows.js
 │   │   ├── useTrendingMovies.js
 │   │   └── useUpcomingMovies.js
-│   │
+│
 │   ├── utils/
 │   │   ├── firebase.js
 │   │   ├── gptQuery.js
@@ -159,7 +159,7 @@ NETFLIX-GPT/
 │   │   ├── openai.js
 │   │   ├── store.js
 │   │   └── userSlice.js
-│   │
+│
 │   ├── App.js
 │   ├── App.test.js
 │   ├── index.css
@@ -174,8 +174,6 @@ NETFLIX-GPT/
 ├── README.md
 └── tailwind.config.js
 
-
----
 
 # 🚀 Getting Started
 
