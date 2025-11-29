@@ -117,6 +117,7 @@ NETFLIX-GPT/
 │   ├── assets/
 │   │   ├── info_icon.svg
 │   │   ├── loader.gif
+│   │   ├── Netflix_icon.png
 │   │   ├── No_Image.webp
 │   │   └── play_icon.svg
 │   └── index.html
