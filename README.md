@@ -1,139 +1,227 @@
-🚀 NetflixGPT
-
-NetflixGPT is a smart, AI-powered movie recommendation and browsing application inspired by Netflix.
-It includes authentication, TMDB movie data, background trailers, and an AI search engine powered by Gemini.
-
-🛠️ Project Setup & Core Steps
-
-Initialize React App using npx create-react-app netflix-gpt
-
-Configure TailwindCSS
-
-Build Header Component
-
-Implement Routing
-
-🔐 Authentication (Firebase)
-
-Login form
-
-Sign Up form
-
-Form validation (Regex)
-
-useRef hook for form inputs
-
-Firebase setup
-
-Deploy app to production
-
-Create SignUp user
-
-Implement SignIn user API
-
-Created Redux store with userSlice
-
-Implemented SignOut
-
-Update profile details
-
-Bug Fixes
-
-Signup user displayName & photo update issue
-
-Redirect:
-
-Unauthenticated → /login
-
-Authenticated → /browse
-
-Unsubscribe onAuthStateChanged to avoid memory leaks
-
-🎬 TMDB Integration
-
-Added hardcoded constants
-
-Registered TMDB API and generated access token
-
-Fetched Now Playing Movies
-
-Implemented custom hooks:
-
-useNowPlayingMovies
-
-usePopularMovies
-
-useTopRatedMovies
-
-useUpcomingMovies
-
-Created movieSlice
-
-Updated store with TMDB data
-
-🎞️ UI & Movie Components
-
-Designed Main Container and Secondary Containers
-
-Fetched trailer video from TMDB
-
-Updated Redux with trailer data
-
-Embedded YouTube trailer (autoplay + mute)
-
-Styled UI using TailwindCSS
-
-Built:
-
-Movie List
-
-Movie Card
-
-TMDB Image CDN integrated
-
-Built multiple hooks to fetch/store movie data
-
-Browse page made fully responsive
-
-🤖 NetflixGPT – AI Movie Search
-
-Created GPT Search Page
-
-GPT Search Bar
-
-Multilingual Search Bar
-
-Integrated Gemini API for movie recommendations
-
-.env configuration for secret keys
-
-Memoized custom hooks for performance
-
-Fully responsive UI
-
-⭐ Features Overview
-🔐 Login / Sign Up
-
-Login / Signup pages
-
-Redirect to browse page after successful login
-
-🎬 Browse (Protected Page)
-
-Header
-
-Main Movie Banner
-
-Background Trailer
-
-Title & Description
-
-Movie Suggestions
-
-Multiple Movie Lists
-
-🤖 NetflixGPT Search
-
-AI-powered Search Bar
-
-Smart Movie Suggestions
+# 🚀 NetflixGPT – AI-Driven Movie Discovery Engine
+
+**A production-grade, intelligent movie recommendation platform blending the cinematic experience of Netflix with the cognitive capabilities of Google Gemini AI.  
+Built using React, Redux Toolkit, Firebase, Tailwind CSS, TMDB API, and Gemini AI — delivering a fast, immersive, and personalized movie exploration experience.**
+
+---
+
+## 🔥 Live Demo  
+👉 *https://netflix-gpt-app-plum.vercel.app/*
+
+---
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/fcc84e87-42fa-4fcd-9aaf-9301aa26081a" alt="Login" /></td>
+    <td><img src="https://github.com/user-attachments/assets/f2e03e1e-2c76-4ef0-9aef-ee2f2252abcf" alt="Hero" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/9ba42453-89a8-4b98-a48c-273cbf76f1a1" alt="Movie Rows" /></td>
+    <td><img src="https://github.com/user-attachments/assets/196c29cc-6403-4f07-9b41-7d55b5d15160" alt="Profile Menu" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/50b89ee0-5c27-4897-bc4c-4656e1c7081f" alt="GPT Search" /></td>
+    <td><img src="https://github.com/user-attachments/assets/a4de5c7f-17c0-4213-bd4e-a780b070cacb" alt="AI Grid" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/afa3326b-acbb-4080-9fcf-6c7f40c096d5" alt="Cards" /></td>
+    <td><img src="https://github.com/user-attachments/assets/6c07e536-d94f-4f32-944e-de1b5ebf0e84" alt="Responsive" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/ef70cc80-61c1-4e03-919f-386617224a2d" alt="Experience" /></td>
+  </tr>
+</table>
+
+---
+
+## 🎯 What is NetflixGPT?
+
+NetflixGPT is a next-generation AI-powered movie assistant.  
+Instead of scrolling endlessly, users can simply type natural queries like:
+
+- *“Show me dark thriller movies like Shutter Island”*  
+- *“Funny retro Indian movies from the 90s”*  
+- *“Romantic Korean dramas available in Hindi”*
+
+Gemini AI understands the intent → maps it to TMDB → fetches relevant movies → displays them beautifully.
+
+---
+
+# ✨ Core Features
+
+## 🔐 1. Enterprise-Grade Authentication
+- Firebase Email/Password Authentication  
+- Persistent session management  
+- Protected routes with auto-redirection  
+- Real-time form validation  
+
+---
+
+## 🎬 2. Personalized Movie Engine
+- Netflix-style autoplaying HD background trailer  
+- TMDB Movie Categories:
+  - 🎞 *Now Playing*  
+  - 🔥 *Trending*  
+  - ⭐ *Top Rated*  
+  - ⏳ *Upcoming*  
+- Custom hooks for modular architecture:
+  - useNowPlayingMovies()
+  - usePopularMovies()
+  - useMovieTrailer(movieId)
+- Seamless YouTube trailer integration  
+
+---
+
+## 🤖 3. AI-Powered GPT/Gemini Search
+- Natural language recommendations  
+- Multilingual input support:
+  - English 🇺🇸  
+  - Hindi 🇮🇳  
+  - Spanish 🇪🇸  
+- Smart AI → TMDB mapping  
+- Redux-powered result management  
+- Memoized API calls for speed  
+
+---
+
+## ⚡ 4. Performance, UX & Architecture
+- Redux Toolkit global store  
+- Movie caching for better UX  
+- Shimmer skeleton UI  
+- Fully responsive Tailwind design  
+- Optimized rendering & debounced API calls  
+- Clean and scalable folder structure  
+
+---
+
+# 🛠 Tech Stack
+
+*Frontend          :* React.js, Redux Toolkit, React Router  
+*Styling           :* Tailwind CSS  
+*Backend & Auth    :* Firebase  
+*APIs              :* TMDB API, Gemini AI  
+*Tools             :* Git, NPM, VS Code, Vercel  
+
+---
+
+# 📁 Project Folder Structure
+
+plaintext
+NETFLIX-GPT/
+│
+├── node_modules/
+│
+├── public/
+│   ├── assets/
+│   │   ├── info_icon.svg
+│   │   ├── loader.gif
+│   │   ├── No_Image.webp
+│   │   └── play_icon.svg
+│   └── index.html
+│
+├── src/
+│   ├── components/
+│   │   ├── Body.js
+│   │   ├── Browse.js
+│   │   ├── GptMovieSuggestions.js
+│   │   ├── GptSearch.js
+│   │   ├── GptSearchBar.js
+│   │   ├── Head.js
+│   │   ├── Login.js
+│   │   ├── MainContainer.js
+│   │   ├── MovieCard.js
+│   │   ├── MovieList.js
+│   │   ├── SecondaryContainer.js
+│   │   ├── ShimmerBrowse.js
+│   │   ├── VideoBackground.js
+│   │   └── VideoTitle.js
+│   │
+│   ├── hooks/
+│   │   ├── useAiringTodayTVShows.js
+│   │   ├── useMovieTrailer.js
+│   │   ├── useNowPlayingMovies.js
+│   │   ├── useOnTheAirTVShows.js
+│   │   ├── usePopularMovies.js
+│   │   ├── usePopularTVShows.js
+│   │   ├── useTopRatedMovies.js
+│   │   ├── useTopRatedTVShows.js
+│   │   ├── useTrendingMovies.js
+│   │   └── useUpcomingMovies.js
+│   │
+│   ├── utils/
+│   │   ├── firebase.js
+│   │   ├── gptQuery.js
+│   │   ├── language.js
+│   │   ├── movieSlice.js
+│   │   ├── openai.js
+│   │   ├── store.js
+│   │   └── userSlice.js
+│   │
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+│
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
+└── tailwind.config.js
+
+
+---
+
+# 🚀 Getting Started
+
+## *1️⃣ Clone the Repository*
+bash
+git clone https://github.com/Mahesh-Gite-28/Netflix-GPT.git
+cd netflix-gpt
+
+
+## *2️⃣ Install Dependencies*
+bash
+npm install
+
+
+## *3️⃣ Add Environment Variables*  
+Create a .env file:
+
+bash
+REACT_APP_TMDB_KEY=your_tmdb_api_key
+REACT_APP_OPENAI_KEY=your_ai_api_key
+
+# Firebase Config
+REACT_APP_FIREBASE_API_KEY=your_firebase_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_bucket.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+
+
+## *4️⃣ Start the App*
+bash
+npm start
+
+
+---
+
+# 🤝 Contributing
+
+- Fork the repository  
+- Create your feature branch  
+- Commit your changes  
+- Push to the branch  
+- Open a Pull Request  
+
+---
+
+# 🏆 Developer  
+
+### Developed with ❤, creativity 🎨, and code 💻 by *Mahesh Gite*
