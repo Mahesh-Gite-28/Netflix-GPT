@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
@@ -35,7 +34,6 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
           const user = userCredential.user;
-
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: USER_AVATAR,
@@ -46,38 +44,47 @@ const Login = () => {
         })
         .catch((err) => setErrorMessage(err.message));
     } else {
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)//sign in 
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .catch((err) => setErrorMessage(err.message));
     }
   };
 
   return (
-    <div className="fixed inset-0 w-full h-full bg-black overflow-hidden">
+    <div className="fixed inset-0 w-full h-full bg-black overflow-auto sm:overflow-hidden">
       <Header />
 
-      {/* Background */}
+      {/* Background Image + Overlay */}
       <div className="fixed inset-0 -z-10">
         <img
           src={BACKGROUND}
           alt="background"
-          className="w-full h-full object-cover object-center"
+          className="
+            w-full h-full object-cover object-top
+            brightness-75
+          "
         />
 
-        {/* Dark Netflix Overlay */}
-        <div className="absolute inset-0 bg-black/60"></div>
+        {/* Netflix Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Top Fade */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        {/* Smooth Fade at Top */}
+       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
       </div>
 
-      {/* FORM CONTAINER */}
-      <div className="flex items-center justify-center w-full h-full px-4 pt-24 sm:pt-32">
+      {/* FORM WRAPPER */}
+      <div
+        className="
+          flex items-center justify-center 
+          w-full min-h-screen
+          px-4 py-20 sm:py-28
+        "
+      >
         <form
           onSubmit={(e) => e.preventDefault()}
           className="
             w-full max-w-[360px] sm:max-w-[420px]
-            bg-black/70 backdrop-blur-sm
-            rounded-md
+            bg-black/75 backdrop-blur-sm
+            rounded-md shadow-xl
             px-6 sm:px-10 py-10 sm:py-12
             space-y-6
           "
@@ -86,7 +93,7 @@ const Login = () => {
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
-          {/* Inputs */}
+          {/* Input Fields */}
           <div className="space-y-4">
             {!isSignInForm && (
               <input
@@ -134,19 +141,19 @@ const Login = () => {
             </div>
           )}
 
-          {/* Main Button */}
+          {/* Submit Button */}
           <button
             onClick={handleButtonClick}
             className="
               w-full py-3 bg-[#E50914] text-white font-semibold
               rounded-md hover:bg-[#C11119] transition-all
-              mt-4
+              mt-2
             "
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
-          {/* Options */}
+          {/* Helper Options */}
           <div className="flex items-center justify-between text-gray-300 text-sm">
             <label className="flex items-center cursor-pointer">
               <input type="checkbox" className="mr-2" />
@@ -158,7 +165,7 @@ const Login = () => {
             </a>
           </div>
 
-          {/* Switch SignIn <-> SignUp */}
+          {/* Switch Between Sign-In / Sign-Up */}
           <p className="text-gray-400 text-base">
             {isSignInForm ? "New to Netflix? " : "Already registered? "}
             <span
@@ -169,7 +176,7 @@ const Login = () => {
             </span>
           </p>
 
-          {/* Recaptcha */}
+          {/* Recaptcha Info */}
           <p className="text-gray-500 text-xs leading-relaxed">
             This page is protected by Google reCAPTCHA to ensure you're not a bot.
             <a href="#" className="text-blue-600 hover:underline"> Learn more.</a>

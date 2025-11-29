@@ -8,7 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constant";
-import { toggleGptSearchView, resetGpt } from "../utils/gptSlice";  // ⭐ added resetGpt
+import { toggleGptSearchView, resetGpt } from "../utils/gptSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constant";
 import { changeLanguage } from "../utils/configSlice";
 
@@ -24,11 +24,7 @@ const Header = () => {
   };
 
   const handleGPTSearchClick = () => {
-    
-    if (showGptSearch) {
-      dispatch(resetGpt());
-    }
-
+    if (showGptSearch) dispatch(resetGpt());
     dispatch(toggleGptSearchView());
   };
 
@@ -43,7 +39,6 @@ const Header = () => {
         navigate("/");
       }
     });
-
     return unsubscribe;
   }, []);
 
@@ -55,26 +50,38 @@ const Header = () => {
     <header
       className="
       fixed top-0 left-0 right-0 z-50
-      bg-gradient-to-b from-black/80 via-black/40 to-transparent
-      px-4 sm:px-8 md:px-12 lg:px-16 py-4
-      flex justify-between items-center
+      bg-gradient-to-b from-black via-black/60 to-transparent
+      px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24
+      py-3 sm:py-4 flex justify-between items-center
+      transition-all
     "
     >
+      {/* LOGO */}
       <img
         src={LOGO}
         alt="Netflix"
-        className="w-24 sm:w-32 md:w-40 cursor-pointer"
+        className="
+        w-20 sm:w-28 md:w-32 lg:w-40 
+        cursor-pointer object-contain
+      "
       />
 
       {user && (
-        <div className="flex items-center gap-3 sm:gap-5">
-
+        <div
+          className="
+          flex items-center gap-2 sm:gap-4 md:gap-6
+        "
+        >
+          {/* LANGUAGE SELECT (only when GPT search is open) */}
           {showGptSearch && (
             <select
               className="
-              bg-black/50 text-white border border-white/20 rounded-md 
-              px-3 py-2 text-sm focus:outline-none cursor-pointer
-              hover:bg-black/70 transition
+              bg-black/60 text-white 
+              border border-white/30 rounded-md 
+              px-2 sm:px-3 py-1.5 text-xs sm:text-sm 
+              focus:outline-none cursor-pointer
+              hover:bg-black/80 transition
+              backdrop-blur-md
             "
               value={langKey}
               onChange={handleLanguageChange}
@@ -91,18 +98,19 @@ const Header = () => {
             </select>
           )}
 
-          {/* GPT SEARCH BUTTON */}
+          {/* GPT Search Button */}
           <button
             className="
-              hidden sm:inline-flex items-center
-              px-4 py-2 rounded-md
+              inline-flex items-center
+              px-3 sm:px-4 py-1.5 sm:py-2 
+              rounded-md
               bg-white/10 hover:bg-white/20 
-              text-white text-sm font-medium
-              transition-all
+              text-white text-xs sm:text-sm font-medium
+              transition-all backdrop-blur-md
             "
             onClick={handleGPTSearchClick}
           >
-            {showGptSearch ? "Homepage" : "GPT Search"}
+            {showGptSearch ? "Home" : "GPT"}
           </button>
 
           {/* USER AVATAR */}
@@ -110,33 +118,34 @@ const Header = () => {
             src={user.photoURL}
             alt="User"
             className="
-              w-8 h-8 sm:w-10 sm:h-10 rounded-md
-              border border-transparent hover:border-white
-              transition-all cursor-pointer
-            "
+            w-8 h-8 sm:w-10 sm:h-10 
+            rounded-md object-cover
+            border border-transparent hover:border-white
+            transition-all cursor-pointer
+          "
           />
 
-          {/* DESKTOP SIGN OUT */}
+          {/* Desktop Sign Out */}
           <button
             onClick={handleSignOut}
             className="
-              hidden sm:inline-flex items-center
-              px-4 py-2 rounded-md
-              bg-white/10 hover:bg-white/20 
-              text-white text-sm font-medium
-              transition-all
-            "
+            hidden sm:inline-flex 
+            px-4 py-2 rounded-md
+            bg-white/10 hover:bg-white/20 
+            text-white text-sm font-medium
+            transition-all backdrop-blur-md
+          "
           >
             Sign Out
           </button>
 
-          {/* MOBILE SIGN OUT */}
+          {/* Mobile Sign Out */}
           <button
             onClick={handleSignOut}
             className="
-              sm:hidden px-3 py-1.5 rounded-md
-              bg-white/10 text-white text-xs
-            "
+            sm:hidden px-3 py-1.5 rounded-md
+            bg-white/10 text-white text-xs
+          "
           >
             Sign Out
           </button>
